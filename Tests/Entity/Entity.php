@@ -12,6 +12,7 @@ namespace RonteLtd\CommonBundle\Tests\Entity;
 
 use RonteLtd\CommonBundle\Entity\AbstractEntity;
 use Doctrine\ORM\Mapping as ORM;
+use RonteLtd\CommonBundle\Entity\CreatedAtTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -24,6 +25,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Entity extends AbstractEntity
 {
+    use CreatedAtTrait;
+
     /**
      * @var int
      *
