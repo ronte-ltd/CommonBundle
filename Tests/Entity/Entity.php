@@ -12,22 +12,46 @@
 namespace RonteLtd\CommonBundle\Tests\Entity;
 
 use RonteLtd\CommonBundle\Entity\AbstractEntity;
-use RonteLtd\CommonBundle\Entity\EntityTrait;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Entity
  *
  * @author Alexey Astafev <efsneiron@gmail.com>
+ *
+ * @ORM\Entity(repositoryClass="EntityRepository")
+ * @ORM\Table(name="entity")
  */
 class Entity extends AbstractEntity
 {
     /**
+     * @var int
+     *
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
      * @var string
+     * @ORM\Column(type="string", nullable=true)
      */
     private $firstname = '';
 
     /**
+     * Gets id
+     *
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
      * @var string
+     * @ORM\Column(type="string", nullable=true)
      */
     private $lastname = '';
 
