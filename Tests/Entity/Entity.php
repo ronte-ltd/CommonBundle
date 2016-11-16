@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file is part of CommonBundle the package.
  *
@@ -13,6 +12,7 @@ namespace RonteLtd\CommonBundle\Tests\Entity;
 
 use RonteLtd\CommonBundle\Entity\AbstractEntity;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Entity
@@ -36,6 +36,7 @@ class Entity extends AbstractEntity
     /**
      * @var string
      * @ORM\Column(type="string", nullable=true)
+     * @Assert\NotBlank()
      */
     private $firstname = '';
 

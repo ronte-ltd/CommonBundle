@@ -8,20 +8,15 @@
  * file that was distributed with this source code.
  */
 
-namespace RonteLtd\CommonBundle\Entity;
+namespace RonteLtd\CommonBundle\Tests\Entity;
+
+use RonteLtd\CommonBundle\Entity\AbstractEntityService;
 
 /**
- * EntityInterface
+ * EntityService
  *
  * @author Alexey Astafev <efsneiron@gmail.com>
  */
-interface EntityInterface
+class EntityService extends AbstractEntityService
 {
-    /**
-     * Fills attributes from array
-     *
-     * @param array $data
-     * @return EntityInterface
-     */
-    public function fromArray(Array $data = []): EntityInterface;
 }
