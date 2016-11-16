@@ -1,3 +1,0 @@
-ronte_ltd_common_homepage:
-    path:     /
-    defaults: { _controller: RonteLtdCommonBundle:Default:index }
