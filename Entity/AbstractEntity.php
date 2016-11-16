@@ -18,22 +18,16 @@ namespace RonteLtd\CommonBundle\Entity;
  */
 abstract class AbstractEntity implements EntityInterface
 {
+    use EntityTrait;
+
     /**
-     * Fills attributes from array
+     * Constructs an object
      *
+     * AbstractEntity constructor.
      * @param array $data
-     * @return EntityInterface
      */
-    final public function fromArray(Array $data = []): EntityInterface
+    public function __construct(array $data = [])
     {
-        foreach ($data as $key => $value) {
-            $method = 'set' . ucfirst($key);
-
-            if (method_exists($this, $method)) {
-                $this->$method($value);
-            }
-        }
-
-        return $this;
+        $this->fromArray($data);
     }
 }
