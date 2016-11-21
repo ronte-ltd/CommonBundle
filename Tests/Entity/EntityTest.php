@@ -57,4 +57,26 @@ class EntityTest extends TestCase
         self::assertEquals('Vasya', $entity->getFirstname());
         self::assertNotEquals('Pupkin', $entity->getLastname());
     }
+
+    /**
+     * Test setter and getter for createdAt
+     */
+    public function testSetGetCreatedAt()
+    {
+        $entity = new Entity();
+        $entity->setCreatedAt(new \DateTime());
+        self::assertInstanceOf('RonteLtd\CommonBundle\Entity\EntityInterface', $entity);
+        self::assertEquals(new \DateTime(), $entity->getCreatedAt());
+    }
+
+    /**
+     * Test setter and getter for createdAt
+     */
+    public function testSetGetUpdatedAt()
+    {
+        $entity = new Entity();
+        $entity->setUpdatedAt(new \DateTime());
+        self::assertInstanceOf('RonteLtd\CommonBundle\Entity\EntityInterface', $entity);
+        self::assertEquals(new \DateTime(), $entity->getUpdatedAt());
+    }
 }
