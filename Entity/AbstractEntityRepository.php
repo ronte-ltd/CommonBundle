@@ -13,11 +13,11 @@ namespace RonteLtd\CommonBundle\Entity;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * AbstractEntityReposiotry
+ * AbstractEntityRepository
  *
  * @author Alexey Astafev <efsneiron@gmail.com>
  */
-abstract class AbstractEntityReposiotry extends EntityRepository implements EntityRepositoryInterface
+abstract class AbstractEntityRepository extends EntityRepository implements EntityRepositoryInterface
 {
     /**
      * @inheritdoc

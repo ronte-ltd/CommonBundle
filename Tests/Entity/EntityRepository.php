@@ -10,13 +10,13 @@
 
 namespace RonteLtd\CommonBundle\Tests\Entity;
 
-use RonteLtd\CommonBundle\Entity\AbstractEntityReposiotry;
+use RonteLtd\CommonBundle\Entity\AbstractEntityRepository;
 
 /**
  * EntityRepository
  *
  * @author Alexey Astafev <efsneiron@gmail.com>
  */
-class EntityRepository extends AbstractEntityReposiotry
+class EntityRepository extends AbstractEntityRepository
 {
 }
