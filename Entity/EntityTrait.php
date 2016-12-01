@@ -21,7 +21,7 @@ trait EntityTrait
      * Fills attributes from array
      *
      * @param array $data
-     * @return EntityInterface
+     * @return $this | EntityInterface
      */
     final public function fromArray(Array $data = []): EntityInterface
     {

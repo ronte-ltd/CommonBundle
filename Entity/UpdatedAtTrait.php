@@ -42,7 +42,7 @@ trait UpdatedAtTrait
      * Sets UpdatedAt
      *
      * @param \DateTime $updatedAt
-     * @return EntityInterface
+     * @return $this | EntityInterface
      */
     public function setUpdatedAt(\DateTime $updatedAt): EntityInterface
     {

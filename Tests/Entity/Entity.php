@@ -22,7 +22,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @author Alexey Astafev <efsneiron@gmail.com>
  *
  * @ORM\Entity(repositoryClass="EntityRepository")
- * @ORM\Table(name="entity")
+ * @ORM\Table(name="t_entity")
  */
 class Entity extends AbstractEntity
 {

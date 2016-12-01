@@ -20,24 +20,17 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 interface EntityServiceInterface
 {
     /**
-     * Constructor.
-     *
-     * @param ValidatorInterface $validator
-     */
-    public function __construct(ValidatorInterface $validator);
-
-    /**
      * Sets a repository
      *
      * @param EntityRepositoryInterface $repository
-     * @return EntityServiceInterface
+     * @return $this | EntityServiceInterface
      */
     public function setRepository(EntityRepositoryInterface $repository): EntityServiceInterface;
 
     /**
      * Gets a repository
      *
-     * @return EntityRepositoryInterface
+     * @return \Doctrine\ORM\EntityRepository | EntityRepositoryInterface
      */
     public function getRepository(): EntityRepositoryInterface;
 
@@ -45,7 +38,7 @@ interface EntityServiceInterface
      * Validates an entity
      *
      * @param EntityInterface $entity
-     * @return array|EntityInterface
+     * @return array | EntityInterface
      */
     public function validate(EntityInterface $entity);
 }

@@ -33,7 +33,7 @@ trait CreatedAtTrait
      * Sets createdAt
      *
      * @param \DateTime $createdAt
-     * @return EntityInterface
+     * @return $this | EntityInterface
      */
     public function setCreatedAt(\DateTime $createdAt): EntityInterface
     {
