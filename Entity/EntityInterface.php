@@ -24,4 +24,18 @@ interface EntityInterface
      * @return $this | EntityInterface
      */
     public function fromArray(Array $data = []): EntityInterface;
+
+    /**
+     * Gets some defined data in array
+     *
+     * @return array
+     */
+    public function toArray(): array;
+
+    /**
+     * Gets id
+     *
+     * @return int
+     */
+    public function getId(): int;
 }
