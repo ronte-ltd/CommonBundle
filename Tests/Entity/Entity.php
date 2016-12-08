@@ -93,4 +93,14 @@ class Entity extends AbstractEntity
     {
         return $this->lastname;
     }
+
+    /**
+     * Gets some defined data in array
+     *
+     * @return array
+     */
+    public function toArray(): array
+    {
+        // TODO: Implement toArray() method.
+    }
 }
