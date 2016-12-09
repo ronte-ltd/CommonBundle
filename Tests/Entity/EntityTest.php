@@ -64,9 +64,10 @@ class EntityTest extends TestCase
     public function testSetGetCreatedAt()
     {
         $entity = new Entity();
-        $entity->setCreatedAt(new \DateTime());
+        $datetime = new \DateTime();
+        $entity->setCreatedAt($datetime);
         self::assertInstanceOf('RonteLtd\CommonBundle\Entity\EntityInterface', $entity);
-        self::assertEquals(new \DateTime(), $entity->getCreatedAt());
+        self::assertEquals($datetime, $entity->getCreatedAt());
     }
 
     /**
@@ -75,8 +76,9 @@ class EntityTest extends TestCase
     public function testSetGetUpdatedAt()
     {
         $entity = new Entity();
-        $entity->setUpdatedAt(new \DateTime());
+        $datetime = new \DateTime();
+        $entity->setUpdatedAt($datetime);
         self::assertInstanceOf('RonteLtd\CommonBundle\Entity\EntityInterface', $entity);
-        self::assertEquals(new \DateTime(), $entity->getUpdatedAt());
+        self::assertEquals($datetime, $entity->getUpdatedAt());
     }
 }
