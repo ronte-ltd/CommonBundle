@@ -1,12 +1,4 @@
 <?php
-/*
- * This file is part of CommonBundle the package.
- *
- * (c) Ruslan Muriev <muriev.r@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace RonteLtd\CommonBundle\Entity;
 
@@ -42,9 +34,9 @@ trait UpdatedAtTrait
      * Sets UpdatedAt
      *
      * @param \DateTime $updatedAt
-     * @return $this | EntityInterface
+     * @return UpdatedAtTrait
      */
-    public function setUpdatedAt(\DateTime $updatedAt): EntityInterface
+    public function setUpdatedAt(\DateTime $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 

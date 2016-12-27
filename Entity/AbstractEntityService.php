@@ -1,12 +1,4 @@
 <?php
-/*
- * This file is part of CommonBundle the package.
- *
- * (c) Alexey Astafev <efsneiron@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace RonteLtd\CommonBundle\Entity;
 
@@ -17,7 +9,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  *
  * @author Alexey Astafev <efsneiron@gmail.com>
  */
-abstract class AbstractEntityService implements EntityServiceInterface
+abstract class AbstractEntityService
 {
     /**
      * @var ValidatorInterface
@@ -25,12 +17,14 @@ abstract class AbstractEntityService implements EntityServiceInterface
     private $validator;
 
     /**
-     * @var EntityRepositoryInterface
+     * @var AbstractEntityRepository
      */
-    private $repository;
+    protected $repository;
 
     /**
-     * @inheritdoc
+     * AbstractEntityService constructor.
+     *
+     * @param ValidatorInterface $validator
      */
     public function __construct(ValidatorInterface $validator)
     {
@@ -38,9 +32,12 @@ abstract class AbstractEntityService implements EntityServiceInterface
     }
 
     /**
-     * @inheritdoc
+     * Sets a repository
+     *
+     * @param AbstractEntityRepository $repository
+     * @return AbstractEntityService
      */
-    public function setRepository(EntityRepositoryInterface $repository): EntityServiceInterface
+    public function setRepository(AbstractEntityRepository $repository): self
     {
         $this->repository = $repository;
 
@@ -48,15 +45,50 @@ abstract class AbstractEntityService implements EntityServiceInterface
     }
 
     /**
-     * @inheritdoc
+     * Gets a repository
+     *
+     * @return AbstractEntityRepository
      */
-    public function getRepository(): EntityRepositoryInterface
+    public function getRepository(): AbstractEntityRepository
     {
         return $this->repository;
     }
 
     /**
-     * @inheritdoc
+     * Saves an entity
+     *
+     * @param EntityInterface $entity
+     * @return EntityInterface
+     */
+    public function save(EntityInterface $entity)
+    {
+        $result = $this->validate($entity);
+
+        if (!is_array($result)) {
+            $this->getRepository()->save($result, true);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Removes an entity
+     *
+     * @param EntityInterface $entity
+     * @return AbstractEntityService
+     */
+    public function remove(EntityInterface $entity): self
+    {
+        $this->getRepository()->remove($entity, true);
+
+        return $this;
+    }
+
+    /**
+     * Validates
+     *
+     * @param EntityInterface $entity
+     * @return EntityInterface
      */
     final public function validate(EntityInterface $entity)
     {

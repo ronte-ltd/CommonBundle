@@ -1,12 +1,4 @@
 <?php
-/*
- * This file is part of CommonBundle the package.
- *
- * (c) Alexey Astafev <efsneiron@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace RonteLtd\CommonBundle\Entity;
 
@@ -17,12 +9,16 @@ use Doctrine\ORM\EntityRepository;
  *
  * @author Alexey Astafev <efsneiron@gmail.com>
  */
-abstract class AbstractEntityRepository extends EntityRepository implements EntityRepositoryInterface
+abstract class AbstractEntityRepository extends EntityRepository
 {
     /**
-     * @inheritdoc
+     * Saves an entity
+     *
+     * @param EntityInterface $entity
+     * @param bool $flush
+     * @return AbstractEntityRepository
      */
-    final public function save(EntityInterface $entity, $flush = true): EntityInterface
+    final public function save(EntityInterface $entity, $flush = false): self
     {
         $this->_em->persist($entity);
 
@@ -30,13 +26,17 @@ abstract class AbstractEntityRepository extends EntityRepository implements Enti
             $this->_em->flush();
         }
 
-        return $entity;
+        return $this;
     }
 
     /**
-     * @inheritdoc
+     * Removes an entity
+     *
+     * @param EntityInterface $entity
+     * @param bool $flush
+     * @return AbstractEntityRepository
      */
-    final public function remove(EntityInterface $entity, $flush = true): EntityInterface
+    final public function remove(EntityInterface $entity, $flush = false): self
     {
         $this->_em->remove($entity);
 
@@ -44,6 +44,6 @@ abstract class AbstractEntityRepository extends EntityRepository implements Enti
             $this->_em->flush();
         }
 
-        return $entity;
+        return $this;
     }
 }
