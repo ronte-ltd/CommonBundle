@@ -74,7 +74,7 @@ abstract class AbstractEntityService
     {
         $result = $this->validate($entity, $groups);
 
-        if (!is_array($result)) {
+        if (!($result instanceof EntityError)) {
             $this->getRepository()->save($result, true);
         }
 
@@ -104,20 +104,20 @@ abstract class AbstractEntityService
     public function validate(EntityInterface $entity, array $groups = [])
     {
         $result = $this->validator->validate($entity, null, $groups);
-        $errors = [];
+        $errors = new EntityError();
 
         foreach ($result as $r) {
-            $errors[$r->getPropertyPath()] = $r->getMessage();
+            $errors->addErrors($r->getPropertyPath(), $r->getMessage());
         }
 
         if ($this->dispatcher) {
-            if ($errors) {
+            if ($errors->getErrors()) {
                 $this->dispatcher->dispatch(EntityEvent::ERROR, new EntityEvent($errors));
             } else {
                 $this->dispatcher->dispatch(EntityEvent::SUCCESS, new EntityEvent($entity));
             }
         }
 
-        return $errors ?: $entity;
+        return $errors->getErrors() ? $errors : $entity;
     }
 }

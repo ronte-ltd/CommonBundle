@@ -3,6 +3,7 @@
 namespace RonteLtd\CommonBundle\Tests\Entity;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase;
+use RonteLtd\CommonBundle\Entity\EntityError;
 use RonteLtd\CommonBundle\Tests\DataFixtures\ORM\LoadEntityData;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
@@ -69,7 +70,7 @@ class EntityServiceTest extends WebTestCase
     {
         $entity = new Entity();
         $result = $this->service->validate($entity);
-        self::assertTrue(is_array($result));
+        self::assertInstanceOf(EntityError::class, $result);
         $result = $this->service->validate($entity->setFirstname('Vasia'));
         self::assertInstanceOf(Entity::class, $result);
     }
@@ -81,12 +82,11 @@ class EntityServiceTest extends WebTestCase
      */
     public function testSave()
     {
-        $entity = new Entity([
-            'firstname' => 'testFirstname',
-        ]);
-
+        $entity = new Entity();
         $result = $this->service->save($entity);
-        self::assertInstanceOf(Entity::class, $result);
+        self::assertInstanceOf(EntityError::class, $result);
+        $entity->setFirstname('testFirstname');
+        self::assertInstanceOf(EntityError::class, $result);
     }
 
     /**
