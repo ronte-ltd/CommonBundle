@@ -2,7 +2,9 @@
 
 namespace RonteLtd\CommonBundle\Tests\Entity;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Liip\FunctionalTestBundle\Test\WebTestCase;
+use RonteLtd\CommonBundle\Tests\DataFixtures\ORM\LoadEntityData;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * EntityServiceTest
@@ -12,14 +14,19 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 class EntityServiceTest extends WebTestCase
 {
     /**
-     * @var \Symfony\Component\Validator\Validator\ValidatorInterface
-     */
-    private $validator;
-
-    /**
      * @var \RonteLtd\CommonBundle\Tests\Entity\EntityRepository
      */
     private $repository;
+
+    /**
+     * @var EntityService
+     */
+    private $service;
+
+    /**
+     * @var \Doctrine\Common\DataFixtures\ReferenceRepository
+     */
+    private $fixtures;
 
     /**
      * @inheritdoc
@@ -27,21 +34,18 @@ class EntityServiceTest extends WebTestCase
     public function setUp()
     {
         $client = self::createClient();
-        $this->validator = $client->getContainer()->get('validator');
+        $validator = $client->getContainer()->get('validator');
+        $this->service = new EntityService($validator, new EventDispatcher());
+        $this->fixtures = $this->loadFixtures([
+            LoadEntityData::class
+        ])->getReferenceRepository();
         $this->repository = $client
             ->getContainer()
             ->get('doctrine')
-            ->getRepository('RonteLtd\CommonBundle\Tests\Entity\Entity');
+            ->getRepository(Entity::class);
+        $this->service->setRepository($this->repository);
 
         parent::setUp();
-    }
-
-    /**
-     * Tests constructor
-     */
-    public function testConstruct()
-    {
-        self::assertInstanceOf(EntityService::class, new EntityService($this->validator));
     }
 
     /**
@@ -52,9 +56,8 @@ class EntityServiceTest extends WebTestCase
      */
     public function testGetSetRepository()
     {
-        $service = new EntityService($this->validator);
-        $service->setRepository($this->repository);
-        self::assertEquals($this->repository, $service->getRepository());
+        $this->service->setRepository($this->repository);
+        self::assertEquals($this->repository, $this->service->getRepository());
     }
 
     /**
@@ -64,11 +67,37 @@ class EntityServiceTest extends WebTestCase
      */
     public function testValidate()
     {
-        $service = new EntityService($this->validator);
         $entity = new Entity();
-        $result = $service->validate($entity);
+        $result = $this->service->validate($entity);
         self::assertTrue(is_array($result));
-        $result = $service->validate($entity->setFirstname('Vasia'));
+        $result = $this->service->validate($entity->setFirstname('Vasia'));
         self::assertInstanceOf(Entity::class, $result);
+    }
+
+    /**
+     * Tests saving an entity
+     *
+     * @covers \RonteLtd\CommonBundle\Tests\Entity\EntityService::save()
+     */
+    public function testSave()
+    {
+        $entity = new Entity([
+            'firstname' => 'testFirstname',
+        ]);
+
+        $result = $this->service->save($entity);
+        self::assertInstanceOf(Entity::class, $result);
+    }
+
+    /**
+     * Test remover for an entity
+     *
+     * @covers \RonteLtd\CommonBundle\Tests\Entity\EntityService::remove()
+     */
+    public function testRemove()
+    {
+        $id = $this->fixtures->getReference('entity')->getId();
+        $entity = $this->repository->find($id);
+        $this->service->remove($entity);
     }
 }

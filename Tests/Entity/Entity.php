@@ -35,7 +35,7 @@ class Entity extends AbstractEntity
      * @ORM\Column(type="string", nullable=true)
      * @Assert\NotBlank()
      */
-    private $firstname = '';
+    private $firstname;
 
     /**
      * Gets id
@@ -51,14 +51,14 @@ class Entity extends AbstractEntity
      * @var string
      * @ORM\Column(type="string", nullable=true)
      */
-    private $lastname = '';
+    private $lastname;
 
     /**
      * Gets firstname
      *
      * @return string
      */
-    public function getFirstname(): string
+    public function getFirstname(): ?string
     {
         return $this->firstname;
     }
@@ -69,7 +69,7 @@ class Entity extends AbstractEntity
      * @param string $firstname
      * @return Entity
      */
-    public function setFirstname(string $firstname): Entity
+    public function setFirstname(string $firstname): self
     {
         $this->firstname = $firstname;
 
@@ -81,7 +81,7 @@ class Entity extends AbstractEntity
      *
      * @return string
      */
-    public function getLastname(): string
+    public function getLastname(): ?string
     {
         return $this->lastname;
     }

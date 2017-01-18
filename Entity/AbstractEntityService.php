@@ -2,6 +2,8 @@
 
 namespace RonteLtd\CommonBundle\Entity;
 
+use RonteLtd\CommonBundle\Event\EntityEvent;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
@@ -17,6 +19,11 @@ abstract class AbstractEntityService
     private $validator;
 
     /**
+     * @var EventDispatcherInterface
+     */
+    private $dispatcher;
+
+    /**
      * @var AbstractEntityRepository
      */
     protected $repository;
@@ -24,11 +31,13 @@ abstract class AbstractEntityService
     /**
      * AbstractEntityService constructor.
      *
+     * @param EventDispatcherInterface $dispatcher
      * @param ValidatorInterface $validator
      */
-    public function __construct(ValidatorInterface $validator)
+    public function __construct(ValidatorInterface $validator, EventDispatcherInterface $dispatcher = null)
     {
         $this->validator = $validator;
+        $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -58,11 +67,12 @@ abstract class AbstractEntityService
      * Saves an entity
      *
      * @param EntityInterface $entity
+     * @param array $groups
      * @return EntityInterface
      */
-    public function save(EntityInterface $entity)
+    public function save(EntityInterface $entity, array $groups = [])
     {
-        $result = $this->validate($entity);
+        $result = $this->validate($entity, $groups);
 
         if (!is_array($result)) {
             $this->getRepository()->save($result, true);
@@ -88,15 +98,24 @@ abstract class AbstractEntityService
      * Validates
      *
      * @param EntityInterface $entity
+     * @param array $groups
      * @return EntityInterface
      */
-    final public function validate(EntityInterface $entity)
+    public function validate(EntityInterface $entity, array $groups = [])
     {
-        $result = $this->validator->validate($entity);
+        $result = $this->validator->validate($entity, null, $groups);
         $errors = [];
 
         foreach ($result as $r) {
             $errors[$r->getPropertyPath()] = $r->getMessage();
+        }
+
+        if ($this->dispatcher) {
+            if ($errors) {
+                $this->dispatcher->dispatch(EntityEvent::ERROR, new EntityEvent($errors));
+            } else {
+                $this->dispatcher->dispatch(EntityEvent::SUCCESS, new EntityEvent($entity));
+            }
         }
 
         return $errors ?: $entity;
