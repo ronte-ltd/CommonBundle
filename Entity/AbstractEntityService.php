@@ -21,7 +21,7 @@ abstract class AbstractEntityService
     /**
      * @var EventDispatcherInterface
      */
-    private $dispatcher;
+    protected $dispatcher;
 
     /**
      * @var AbstractEntityRepository
