@@ -12,14 +12,18 @@ use Symfony\Component\EventDispatcher\Event;
  */
 class EntityEvent extends Event
 {
-    const SUCCESS = 'ronteld.common.validation.success';
-    const ERROR = 'ronteld.common.validation.error';
+    const SUCCESS = 'ronteltd.common.validation.success';
+    const ERROR = 'ronteltd.common.validation.error';
 
     /**
      * @var EntityInterface|array
      */
     private $entity;
 
+    /**
+     * EntityEvent constructor.
+     * @param $entity
+     */
     public function __construct($entity)
     {
         $this->entity = $entity;
