@@ -29,6 +29,8 @@ final class EntityError
     }
 
     /**
+     * Gets errors
+     *
      * @return array
      */
     public function getErrors(): array
