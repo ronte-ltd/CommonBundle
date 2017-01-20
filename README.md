@@ -17,6 +17,7 @@ new RonteLtd\ElasticBundle\RonteLtdElasticBundle()
 namespace AppBundle\Entity;
 
 use RonteLtd\CommonBundle\Entity\AbstractEntity;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Entity
@@ -63,7 +64,7 @@ services:
         arguments:
             - AppBundle\Entity\Entity
 
-     ## Services
+    ## Services
     app.entity_service:
         class: AppBundle\Service\EntityService
         arguments: ["@validator", "@event_dispatcher"]
