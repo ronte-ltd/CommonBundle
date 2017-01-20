@@ -143,8 +143,10 @@ abstract class AbstractEntityService
             ->setMaxResults($limit); // limit
 
         return [
+            'page' => $page,
             'total' => $totalItems,
             'pages' => $pagesCount,
+            'limit' => $limit,
             'data' => $paginator
         ];
     }
