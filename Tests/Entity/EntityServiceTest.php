@@ -2,6 +2,7 @@
 
 namespace RonteLtd\CommonBundle\Tests\Entity;
 
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 use RonteLtd\CommonBundle\Entity\EntityError;
 use RonteLtd\CommonBundle\Tests\DataFixtures\ORM\LoadEntityData;
@@ -99,5 +100,20 @@ class EntityServiceTest extends WebTestCase
         $id = $this->fixtures->getReference('entity')->getId();
         $entity = $this->repository->find($id);
         $this->service->remove($entity);
+    }
+
+    /**
+     * Tests paginate
+     *
+     * @covers \RonteLtd\CommonBundle\Tests\Entity\EntityService::paginate()
+     */
+    public function testPaginate()
+    {
+        $qb =  $this->repository->createQueryBuilder('e');
+        $query = $qb->getQuery();
+        $result = $this->service->paginate($query);
+        self::assertEquals(1, $result['pages']);
+        self::assertEquals(1, $result['total']);
+        self::assertInstanceOf(Paginator::class, $result['data']);
     }
 }

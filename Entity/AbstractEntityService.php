@@ -2,6 +2,8 @@
 
 namespace RonteLtd\CommonBundle\Entity;
 
+use Doctrine\ORM\Query;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use RonteLtd\CommonBundle\Event\EntityEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -119,5 +121,31 @@ abstract class AbstractEntityService
         }
 
         return $errors->getErrors() ? $errors : $entity;
+    }
+
+    /**
+     * Paginates a query
+     *
+     * @param Query $query
+     * @param int $page
+     * @param int $limit
+     * @param bool $fetchJoinCollection
+     * @return array
+     */
+    public function paginate(Query $query, $page = 1, $limit = 10, $fetchJoinCollection = false): array
+    {
+        $paginator = new Paginator($query, $fetchJoinCollection);
+        $totalItems = $paginator->count();
+        $pagesCount = ceil($totalItems / $limit);
+        $paginator
+            ->getQuery()
+            ->setFirstResult($limit * ($page - 1)) // offset
+            ->setMaxResults($limit); // limit
+
+        return [
+            'total' => $totalItems,
+            'pages' => $pagesCount,
+            'data' => $paginator
+        ];
     }
 }
