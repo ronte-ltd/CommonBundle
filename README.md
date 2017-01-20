@@ -81,7 +81,7 @@ $entity = new Entity();
 // validate
 $result = $service->validate($entity)
 
-// save|remove:
+// save|remove
 $service->save($entity);
 $service->remove($entity);
 
