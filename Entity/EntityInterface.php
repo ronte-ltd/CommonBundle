@@ -23,11 +23,4 @@ interface EntityInterface
      * @return array
      */
     public function toArray(): array;
-
-    /**
-     * Gets id
-     *
-     * @return int
-     */
-    public function getId(): ?int;
 }
