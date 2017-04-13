@@ -2,72 +2,80 @@
 
 namespace RonteLtd\CommonBundle\Tests\Entity;
 
+use RonteLtd\CommonBundle\Entity\Test\Entity;
+
 /**
  * EntityTest
  *
  * @author Alexey Astafev <efsneiron@gmail.com>
+ * @group entity
  */
 class EntityTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var array
+     * @var Entity
      */
-    private $data;
+    private $entity;
 
     /**
      * @inheritdoc
      */
     public function setUp()
     {
-        $this->data = [
-            'firstname' => 'Vasya',
-            'lastname' => 'Pupkin'
-        ];
-
+        $this->entity = new Entity();
         parent::setUp();
     }
 
     /**
      * Tests construct
+     *
+     * @group entity
      */
     public function testConstruct()
     {
-        $entity = new Entity($this->data);
+        $entity = new Entity([]);
         self::assertInstanceOf(Entity::class, $entity);
     }
 
     /**
      * Tests FromArray
      *
-     * @covers \RonteLtd\CommonBundle\Tests\Entity\Entity::fromArray()
+     * @covers \RonteLtd\CommonBundle\Entity\Test\Entity::fromArray()
      */
     public function testFromArray()
     {
-        $entity = new Entity([]);
-        $entity->fromArray($this->data);
-        self::assertEquals('Vasya', $entity->getFirstname());
-        self::assertNotEquals('Pupkin', $entity->getLastname());
+        $data = [
+            'firstname' => 'Vasia',
+            'lastname' => 'Pupkin',
+        ];
+        $this->entity->fromArray($data);
+        self::assertEquals($data['firstname'], $this->entity->getFirstname());
+        self::assertNotEquals($data['lastname'], $this->entity->getLastname());
     }
 
     /**
      * Test setter and getter for createdAt
+     *
+     * @covers \RonteLtd\CommonBundle\Entity\Test\Entity::setCreatedAt()
+     * @covers \RonteLtd\CommonBundle\Entity\Test\Entity::getCreatedAt()
      */
     public function testSetGetCreatedAt()
     {
-        $entity = new Entity();
         $datetime = new \DateTime();
-        $entity->setCreatedAt($datetime);
-        self::assertEquals($datetime, $entity->getCreatedAt());
+        self::assertInstanceOf(Entity::class, $this->entity->setCreatedAt($datetime));
+        self::assertEquals($datetime, $this->entity->getCreatedAt());
     }
 
     /**
-     * Test setter and getter for createdAt
+     * Test setter and getter for updatedAt
+     *
+     * @covers  \RonteLtd\CommonBundle\Entity\Test\Entity::setUpdatedAt()
+     * @covers  \RonteLtd\CommonBundle\Entity\Test\Entity::getUpdatedAt()
      */
     public function testSetGetUpdatedAt()
     {
-        $entity = new Entity();
         $datetime = new \DateTime();
-        $entity->setUpdatedAt($datetime);
-        self::assertEquals($datetime, $entity->getUpdatedAt());
+        self::assertInstanceOf(Entity::class, $this->entity->setUpdatedAt($datetime));
+        self::assertEquals($datetime, $this->entity->getUpdatedAt());
     }
 }

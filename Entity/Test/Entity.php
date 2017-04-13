@@ -1,9 +1,9 @@
 <?php
 
-namespace RonteLtd\CommonBundle\Tests\Entity;
+namespace RonteLtd\CommonBundle\Entity\Test;
 
-use RonteLtd\CommonBundle\Entity\AbstractEntity;
 use Doctrine\ORM\Mapping as ORM;
+use RonteLtd\CommonBundle\Entity\AbstractEntity;
 use RonteLtd\CommonBundle\Entity\CreatedAtTrait;
 use RonteLtd\CommonBundle\Entity\UpdatedAtTrait;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @author Alexey Astafev <efsneiron@gmail.com>
  *
  * @ORM\Entity(repositoryClass="EntityRepository")
- * @ORM\Table(name="t_entity")
+ * @ORM\Table(name="entity")
  */
 class Entity extends AbstractEntity
 {
@@ -36,6 +36,15 @@ class Entity extends AbstractEntity
      * @Assert\NotBlank()
      */
     private $firstname;
+
+    /**
+     * Entity constructor.
+     * @param array $data
+     */
+    public function __construct(array $data = [])
+    {
+        parent::__construct($data);
+    }
 
     /**
      * Gets id

@@ -5,6 +5,7 @@ namespace RonteLtd\CommonBundle\Entity;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use RonteLtd\CommonBundle\Event\EntityEvent;
+use RonteLtd\CommonBundle\Exception\EntityValidateException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -21,11 +22,6 @@ abstract class AbstractEntityService
     private $validator;
 
     /**
-     * @var EventDispatcherInterface
-     */
-    protected $dispatcher;
-
-    /**
      * @var AbstractEntityRepository
      */
     protected $repository;
@@ -33,13 +29,11 @@ abstract class AbstractEntityService
     /**
      * AbstractEntityService constructor.
      *
-     * @param EventDispatcherInterface $dispatcher
      * @param ValidatorInterface $validator
      */
-    public function __construct(ValidatorInterface $validator, EventDispatcherInterface $dispatcher = null)
+    public function __construct(ValidatorInterface $validator)
     {
         $this->validator = $validator;
-        $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -75,10 +69,7 @@ abstract class AbstractEntityService
     public function save(EntityInterface $entity, array $groups = [])
     {
         $result = $this->validate($entity, $groups);
-
-        if (!($result instanceof EntityError)) {
-            $this->getRepository()->save($result, true);
-        }
+        $this->getRepository()->save($result, true);
 
         return $result;
     }
@@ -102,25 +93,17 @@ abstract class AbstractEntityService
      * @param EntityInterface $entity
      * @param array $groups
      * @return EntityInterface
+     * @throws EntityValidateException
      */
     public function validate(EntityInterface $entity, array $groups = [])
     {
-        $result = $this->validator->validate($entity, null, $groups);
-        $errors = new EntityError();
+        $violations = $this->validator->validate($entity, null, $groups);
 
-        foreach ($result as $r) {
-            $errors->addErrors($r->getPropertyPath(), $r->getMessage());
+        if ($violations->count()) {
+            throw new EntityValidateException('Validation error', $violations, 400);
         }
 
-        if ($this->dispatcher) {
-            if ($errors->getErrors()) {
-                $this->dispatcher->dispatch(EntityEvent::ERROR, new EntityEvent($errors));
-            } else {
-                $this->dispatcher->dispatch(EntityEvent::SUCCESS, new EntityEvent($entity));
-            }
-        }
-
-        return $errors->getErrors() ? $errors : $entity;
+        return $entity;
     }
 
     /**
@@ -139,7 +122,7 @@ abstract class AbstractEntityService
         $pagesCount = ceil($totalItems / $limit);
         $paginator
             ->getQuery()
-            ->setFirstResult($limit * ($page - 1)) // offset
+            ->setFirstResult($limit * ($page - 1))// offset
             ->setMaxResults($limit); // limit
 
         return [

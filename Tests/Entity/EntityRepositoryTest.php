@@ -3,6 +3,7 @@
 namespace RonteLtd\CommonBundle\Tests\Entity;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase;
+use RonteLtd\CommonBundle\Entity\Test\Entity;
 
 /**
  * EntityRepositoryTest
@@ -17,7 +18,7 @@ class EntityRepositoryTest extends WebTestCase
     private $client;
 
     /**
-     * @var \RonteLtd\CommonBundle\Tests\Entity\EntityRepository
+     * @var \RonteLtd\CommonBundle\Entity\Test\EntityRepository
      */
     private $repository;
 
@@ -37,7 +38,7 @@ class EntityRepositoryTest extends WebTestCase
             ->get('doctrine')
             ->getRepository(Entity::class);
         $this->fixtures = $this->loadFixtures(array(
-            'RonteLtd\CommonBundle\Tests\DataFixtures\ORM\LoadEntityData',
+            'RonteLtd\CommonBundle\DataFixtures\ORM\LoadEntityData',
         ))->getReferenceRepository();
 
         parent::setUp();
@@ -46,21 +47,21 @@ class EntityRepositoryTest extends WebTestCase
     /**
      * Tests save
      *
-     * @covers \RonteLtd\CommonBundle\Tests\Entity\EntityRepository::save()
+     * @covers \RonteLtd\CommonBundle\Entity\Test\EntityRepository::save()
      * @group repository_save
      */
     public function testSave()
     {
         $entity = $this->fixtures->getReference('entity');
-        $entity->setFirstname('xman');
+        $entity->setFirstname('ipman');
         $this->repository->save($entity, true);
-        self::assertEquals('xman', $entity->getFirstname());
+        self::assertEquals('ipman', $entity->getFirstname());
     }
 
     /**
      * Tests remove
      *
-     * @covers \RonteLtd\CommonBundle\Tests\Entity\EntityRepository::remove()
+     * @covers \RonteLtd\CommonBundle\Entity\Test\EntityRepository::remove()
      */
     public function testRemove()
     {
