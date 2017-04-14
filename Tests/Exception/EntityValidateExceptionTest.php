@@ -3,8 +3,8 @@
 namespace RonteLtd\CommonBundle\Tests\Exception;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase;
-use RonteLtd\CommonBundle\Entity\Test\Entity;
 use RonteLtd\CommonBundle\Exception\EntityValidateException;
+use RonteLtd\CommonBundle\Tests\Entity\Entity;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 /**

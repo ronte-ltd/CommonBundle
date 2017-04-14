@@ -1,6 +1,6 @@
 <?php
 
-namespace RonteLtd\CommonBundle\Entity\Test;
+namespace RonteLtd\CommonBundle\Tests\Repository;
 
 use RonteLtd\CommonBundle\Entity\AbstractEntityRepository;
 

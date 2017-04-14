@@ -1,10 +1,10 @@
 <?php
 
-namespace RonteLtd\CommonBundle\DataFixtures\ORM;
+namespace RonteLtd\CommonBundle\Tests\Fixtures;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use RonteLtd\CommonBundle\DataFixtures\AbstractBaseFixture;
-use RonteLtd\CommonBundle\Entity\Test\Entity;
+use RonteLtd\CommonBundle\Tests\Entity\Entity;
 
 /**
  * LoadEntityData

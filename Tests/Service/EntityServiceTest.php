@@ -4,22 +4,20 @@ namespace RonteLtd\CommonBundle\Tests\Entity;
 
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
-use RonteLtd\CommonBundle\DataFixtures\ORM\LoadEntityData;
-use RonteLtd\CommonBundle\Entity\Test\Entity;
-use RonteLtd\CommonBundle\Entity\Test\EntityService;
 use RonteLtd\CommonBundle\Exception\EntityValidateException;
+use RonteLtd\CommonBundle\Tests\Fixtures\LoadEntityData;
+use RonteLtd\CommonBundle\Tests\Service\EntityService;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 /**
  * EntityServiceTest
  *
  * @author Alexey Astafev <efsneiron@gmail.com>
- * @group entity_service
  */
 class EntityServiceTest extends WebTestCase
 {
     /**
-     * @var \RonteLtd\CommonBundle\Entity\Test\EntityRepository
+     * @var \RonteLtd\CommonBundle\Tests\Repository\EntityRepository
      */
     private $repository;
 
@@ -56,8 +54,8 @@ class EntityServiceTest extends WebTestCase
     /**
      * Tests setter and gettter of the EntityService
      *
-     * @covers \RonteLtd\CommonBundle\Entity\Test\EntityService::setRepository()
-     * @covers \RonteLtd\CommonBundle\Entity\Test\EntityService::getRepository()
+     * @covers \RonteLtd\CommonBundle\Tests\Service\EntityService::setRepository()
+     * @covers \RonteLtd\CommonBundle\Tests\Service\EntityService::getRepository()
      */
     public function testGetSetRepository()
     {
@@ -81,7 +79,7 @@ class EntityServiceTest extends WebTestCase
     /**
      * Tests validation
      *
-     * @covers \RonteLtd\CommonBundle\Entity\Test\EntityService::validate()
+     * @covers \RonteLtd\CommonBundle\Tests\Service\EntityService::validate()
      *
      */
     public function testValidate()
@@ -94,7 +92,7 @@ class EntityServiceTest extends WebTestCase
     /**
      * Tests saving an entity
      *
-     * @covers \RonteLtd\CommonBundle\Entity\Test\EntityService::save()
+     * @covers \RonteLtd\CommonBundle\Tests\Service\EntityService::save()
      * @group entity_save
      */
     public function testSave()
@@ -107,7 +105,7 @@ class EntityServiceTest extends WebTestCase
     /**
      * Test remover for an entity
      *
-     * @covers \RonteLtd\CommonBundle\Entity\Test\EntityService::remove()
+     * @covers \RonteLtd\CommonBundle\Tests\Service\EntityService::remove()
      */
     public function testRemove()
     {
@@ -119,7 +117,7 @@ class EntityServiceTest extends WebTestCase
     /**
      * Tests paginate
      *
-     * @covers \RonteLtd\CommonBundle\Entity\Test\EntityService::paginate()
+     * @covers \RonteLtd\CommonBundle\Tests\Service\EntityService::paginate()
      */
     public function testPaginate()
     {

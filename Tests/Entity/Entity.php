@@ -1,6 +1,6 @@
 <?php
 
-namespace RonteLtd\CommonBundle\Entity\Test;
+namespace RonteLtd\CommonBundle\Tests\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use RonteLtd\CommonBundle\Entity\AbstractEntity;
@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @author Alexey Astafev <efsneiron@gmail.com>
  *
- * @ORM\Entity(repositoryClass="EntityRepository")
+ * @ORM\Entity(repositoryClass="RonteLtd\CommonBundle\Tests\Repository\EntityRepository")
  * @ORM\Table(name="entity")
  */
 class Entity extends AbstractEntity

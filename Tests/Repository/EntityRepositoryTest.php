@@ -3,7 +3,7 @@
 namespace RonteLtd\CommonBundle\Tests\Entity;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase;
-use RonteLtd\CommonBundle\Entity\Test\Entity;
+use RonteLtd\CommonBundle\Tests\Fixtures\LoadEntityData;
 
 /**
  * EntityRepositoryTest
@@ -18,7 +18,7 @@ class EntityRepositoryTest extends WebTestCase
     private $client;
 
     /**
-     * @var \RonteLtd\CommonBundle\Entity\Test\EntityRepository
+     * @var \RonteLtd\CommonBundle\Tests\Repository\EntityRepository
      */
     private $repository;
 
@@ -38,7 +38,7 @@ class EntityRepositoryTest extends WebTestCase
             ->get('doctrine')
             ->getRepository(Entity::class);
         $this->fixtures = $this->loadFixtures(array(
-            'RonteLtd\CommonBundle\DataFixtures\ORM\LoadEntityData',
+            LoadEntityData::class
         ))->getReferenceRepository();
 
         parent::setUp();
@@ -47,7 +47,7 @@ class EntityRepositoryTest extends WebTestCase
     /**
      * Tests save
      *
-     * @covers \RonteLtd\CommonBundle\Entity\Test\EntityRepository::save()
+     * @covers \RonteLtd\CommonBundle\Tests\Repository\EntityRepository::save()
      * @group repository_save
      */
     public function testSave()
@@ -61,7 +61,7 @@ class EntityRepositoryTest extends WebTestCase
     /**
      * Tests remove
      *
-     * @covers \RonteLtd\CommonBundle\Entity\Test\EntityRepository::remove()
+     * @covers \RonteLtd\CommonBundle\Tests\Repository\EntityRepository::remove()
      */
     public function testRemove()
     {

@@ -2,13 +2,10 @@
 
 namespace RonteLtd\CommonBundle\Tests\Entity;
 
-use RonteLtd\CommonBundle\Entity\Test\Entity;
-
 /**
  * EntityTest
  *
  * @author Alexey Astafev <efsneiron@gmail.com>
- * @group entity
  */
 class EntityTest extends \PHPUnit_Framework_TestCase
 {
@@ -40,7 +37,7 @@ class EntityTest extends \PHPUnit_Framework_TestCase
     /**
      * Tests FromArray
      *
-     * @covers \RonteLtd\CommonBundle\Entity\Test\Entity::fromArray()
+     * @covers \RonteLtd\CommonBundle\Tests\Entity\Entity::fromArray()
      */
     public function testFromArray()
     {
@@ -56,8 +53,8 @@ class EntityTest extends \PHPUnit_Framework_TestCase
     /**
      * Test setter and getter for createdAt
      *
-     * @covers \RonteLtd\CommonBundle\Entity\Test\Entity::setCreatedAt()
-     * @covers \RonteLtd\CommonBundle\Entity\Test\Entity::getCreatedAt()
+     * @covers \RonteLtd\CommonBundle\Tests\Entity\Entity::setCreatedAt()
+     * @covers \RonteLtd\CommonBundle\Tests\Entity\Entity::getCreatedAt()
      */
     public function testSetGetCreatedAt()
     {
@@ -69,8 +66,8 @@ class EntityTest extends \PHPUnit_Framework_TestCase
     /**
      * Test setter and getter for updatedAt
      *
-     * @covers  \RonteLtd\CommonBundle\Entity\Test\Entity::setUpdatedAt()
-     * @covers  \RonteLtd\CommonBundle\Entity\Test\Entity::getUpdatedAt()
+     * @covers  \RonteLtd\CommonBundle\Tests\Entity\Entity::setUpdatedAt()
+     * @covers  \RonteLtd\CommonBundle\Tests\Entity\Entity::getUpdatedAt()
      */
     public function testSetGetUpdatedAt()
     {
