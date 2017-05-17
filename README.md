@@ -7,7 +7,7 @@ composer require ronte-ltd/common-bundle
 ```
 ### AppKernel.php
 ```php
-new RonteLtd\ElasticBundle\RonteLtdElasticBundle()
+new RonteLtd\ElasticBundle\RonteLtdCommonBundle()
 ```
 ## Usage
 ### Entity
