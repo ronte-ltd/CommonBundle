@@ -1,21 +1,21 @@
 <?php
 
-namespace RonteLtd\CommonBundle\Entity;
+namespace RonteLtd\CommonBundle\Traits;
 
 /**
- * EntityTrait
+ * SetPropertiesFromArrayTrait
  *
  * @author Alexey Astafev <efsneiron@gmail.com>
  */
-trait EntityTrait
+trait SetPropertiesFromArrayTrait
 {
     /**
      * Fills attributes from array
      *
      * @param array $data
-     * @return EntityTrait
+     * @return SetPropertiesFromArrayTrait
      */
-    final public function fromArray(Array $data = []): self
+    final public function fromArray(Array $data): self
     {
         foreach ($data as $key => $value) {
             $method = 'set' . ucfirst($key);

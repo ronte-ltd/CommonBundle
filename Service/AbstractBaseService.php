@@ -1,20 +1,20 @@
 <?php
 
-namespace RonteLtd\CommonBundle\Entity;
+namespace RonteLtd\CommonBundle\Service;
 
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Tools\Pagination\Paginator;
-use RonteLtd\CommonBundle\Event\EntityEvent;
+use RonteLtd\CommonBundle\Entity\BaseEntityInterface;
 use RonteLtd\CommonBundle\Exception\EntityValidateException;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use RonteLtd\CommonBundle\Repository\AbstractBaseRepository;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
- * EntityService
+ * AbstractBaseService
  *
  * @author Alexey Astafev <efsneiron@gmail.com>
  */
-abstract class AbstractEntityService
+abstract class AbstractBaseService
 {
     /**
      * @var ValidatorInterface
@@ -22,16 +22,16 @@ abstract class AbstractEntityService
     private $validator;
 
     /**
-     * @var AbstractEntityRepository
+     * @var AbstractBaseRepository
      */
-    protected $repository;
+    private $repository;
 
     /**
      * AbstractEntityService constructor.
      *
-     * @param ValidatorInterface $validator
+     * @param ValidatorInterface|null $validator
      */
-    public function __construct(ValidatorInterface $validator)
+    public function __construct(ValidatorInterface $validator = null)
     {
         $this->validator = $validator;
     }
@@ -39,10 +39,10 @@ abstract class AbstractEntityService
     /**
      * Sets a repository
      *
-     * @param AbstractEntityRepository $repository
-     * @return AbstractEntityService
+     * @param AbstractBaseRepository $repository
+     * @return AbstractBaseService
      */
-    public function setRepository(AbstractEntityRepository $repository): self
+    public function setRepository(AbstractBaseRepository $repository): self
     {
         $this->repository = $repository;
 
@@ -52,9 +52,9 @@ abstract class AbstractEntityService
     /**
      * Gets a repository
      *
-     * @return AbstractEntityRepository
+     * @return AbstractBaseRepository
      */
-    public function getRepository(): AbstractEntityRepository
+    public function getRepository(): AbstractBaseRepository
     {
         return $this->repository;
     }
@@ -62,11 +62,11 @@ abstract class AbstractEntityService
     /**
      * Saves an entity
      *
-     * @param EntityInterface $entity
+     * @param BaseEntityInterface $entity
      * @param array $groups
-     * @return EntityInterface
+     * @return BaseEntityInterface
      */
-    public function save(EntityInterface $entity, array $groups = [])
+    public function save(BaseEntityInterface $entity, array $groups = [])
     {
         $result = $this->validate($entity, $groups);
         $this->getRepository()->save($result, true);
@@ -77,10 +77,10 @@ abstract class AbstractEntityService
     /**
      * Removes an entity
      *
-     * @param EntityInterface $entity
-     * @return AbstractEntityService
+     * @param BaseEntityInterface $entity
+     * @return AbstractBaseService
      */
-    public function remove(EntityInterface $entity): self
+    public function remove(BaseEntityInterface $entity): self
     {
         $this->getRepository()->remove($entity, true);
 
@@ -90,12 +90,12 @@ abstract class AbstractEntityService
     /**
      * Validates
      *
-     * @param EntityInterface $entity
+     * @param BaseEntityInterface $entity
      * @param array $groups
-     * @return EntityInterface
+     * @return BaseEntityInterface
      * @throws EntityValidateException
      */
-    public function validate(EntityInterface $entity, array $groups = [])
+    public function validate(BaseEntityInterface $entity, array $groups = [])
     {
         $violations = $this->validator->validate($entity, null, $groups);
 
@@ -126,10 +126,12 @@ abstract class AbstractEntityService
             ->setMaxResults($limit); // limit
 
         return [
-            'page' => $page,
-            'total' => $totalItems,
-            'pages' => $pagesCount,
-            'limit' => $limit,
+            'meta' => [
+                'page' => $page,
+                'total' => $totalItems,
+                'pages' => $pagesCount,
+                'limit' => $limit,
+            ],
             'data' => $paginator
         ];
     }

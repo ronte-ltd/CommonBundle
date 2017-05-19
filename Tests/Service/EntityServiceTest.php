@@ -124,8 +124,10 @@ class EntityServiceTest extends WebTestCase
         $qb =  $this->repository->createQueryBuilder('e');
         $query = $qb->getQuery();
         $result = $this->service->paginate($query);
-        self::assertEquals(1, $result['pages']);
-        self::assertEquals(1, $result['total']);
+        self::assertArrayHasKey('meta', $result);
+        self::assertArrayHasKey('data', $result);
         self::assertInstanceOf(Paginator::class, $result['data']);
+        self::assertEquals(1, $result['meta']['pages']);
+        self::assertEquals(1, $result['meta']['total']);
     }
 }

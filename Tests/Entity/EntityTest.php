@@ -2,12 +2,14 @@
 
 namespace RonteLtd\CommonBundle\Tests\Entity;
 
+use Liip\FunctionalTestBundle\Test\WebTestCase;
+
 /**
  * EntityTest
  *
  * @author Alexey Astafev <efsneiron@gmail.com>
  */
-class EntityTest extends \PHPUnit_Framework_TestCase
+class EntityTest extends WebTestCase
 {
     /**
      * @var Entity
@@ -19,8 +21,8 @@ class EntityTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->entity = new Entity();
         parent::setUp();
+        $this->entity = new Entity();
     }
 
     /**

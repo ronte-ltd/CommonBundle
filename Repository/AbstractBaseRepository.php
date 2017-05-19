@@ -1,24 +1,25 @@
 <?php
 
-namespace RonteLtd\CommonBundle\Entity;
+namespace RonteLtd\CommonBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use RonteLtd\CommonBundle\Entity\BaseEntityInterface;
 
 /**
- * AbstractEntityRepository
+ * AbstractBaseRepository
  *
  * @author Alexey Astafev <efsneiron@gmail.com>
  */
-abstract class AbstractEntityRepository extends EntityRepository
+abstract class AbstractBaseRepository extends EntityRepository
 {
     /**
      * Saves an entity
      *
-     * @param EntityInterface $entity
+     * @param BaseEntityInterface $entity
      * @param bool $flush
-     * @return AbstractEntityRepository
+     * @return AbstractBaseRepository
      */
-    final public function save(EntityInterface $entity, $flush = false): self
+    final public function save(BaseEntityInterface $entity, $flush = false): self
     {
         $this->_em->persist($entity);
 
@@ -32,11 +33,11 @@ abstract class AbstractEntityRepository extends EntityRepository
     /**
      * Removes an entity
      *
-     * @param EntityInterface $entity
+     * @param BaseEntityInterface $entity
      * @param bool $flush
-     * @return AbstractEntityRepository
+     * @return AbstractBaseRepository
      */
-    final public function remove(EntityInterface $entity, $flush = false): self
+    final public function remove(BaseEntityInterface $entity, $flush = false): self
     {
         $this->_em->remove($entity);
 

@@ -3,7 +3,7 @@
 namespace RonteLtd\CommonBundle\Tests\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use RonteLtd\CommonBundle\Entity\AbstractEntity;
+use RonteLtd\CommonBundle\Entity\AbstractBaseEntity;
 use RonteLtd\CommonBundle\Entity\CreatedAtTrait;
 use RonteLtd\CommonBundle\Entity\UpdatedAtTrait;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="RonteLtd\CommonBundle\Tests\Repository\EntityRepository")
  * @ORM\Table(name="entity")
  */
-class Entity extends AbstractEntity
+class Entity extends AbstractBaseEntity
 {
     use CreatedAtTrait;
     use UpdatedAtTrait;
