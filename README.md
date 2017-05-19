@@ -7,7 +7,7 @@ composer require ronte-ltd/common-bundle
 ```
 ### AppKernel.php
 ```php
-new RonteLtd\ElasticBundle\RonteLtdCommonBundle()2
+new RonteLtd\ElasticBundle\RonteLtdCommonBundle()
 ```
 ## Usage
 ### Entity
@@ -16,7 +16,7 @@ new RonteLtd\ElasticBundle\RonteLtdCommonBundle()2
 
 namespace AppBundle\Entity;
 
-use RonteLtd\CommonBundle\Entity\AbstractEntity;
+use RonteLtd\CommonBundle\Entity\AbstractBaseEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -25,7 +25,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\DefaultRepository")
  * @ORM\Table(name="some_entity")
  */
-class Entity extends AbstractEntity
+class Entity extends AbstractBaseEntity
 {
 }
 ```
@@ -35,9 +35,9 @@ class Entity extends AbstractEntity
 
 namespace AppBundle\Repository;
 
-use RonteLtd\CommonBundle\Entity\AbstractEntityRepository;
+use RonteLtd\CommonBundle\Repository\AbstractBaseRepository;
 
-class DefaultRepository extends AbstractEntityRepository
+class DefaultRepository extends AbstractBaseRepository
 {
 }
 ```
@@ -47,9 +47,9 @@ class DefaultRepository extends AbstractEntityRepository
 
 namespace AppBundle\Service;
 
-use RonteLtd\CommonBundle\Entity\AbstractEntityService;
+use RonteLtd\CommonBundle\Service\AbstractBaseService;
 
-class EntityService extends AbstractEntityService
+class EntityService extends AbstractBaseService
 {
 }
 ```

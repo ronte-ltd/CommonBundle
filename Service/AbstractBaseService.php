@@ -97,10 +97,12 @@ abstract class AbstractBaseService
      */
     public function validate(BaseEntityInterface $entity, array $groups = [])
     {
-        $violations = $this->validator->validate($entity, null, $groups);
+        if ($this->validator) {
+            $violations = $this->validator->validate($entity, null, $groups);
 
-        if ($violations->count()) {
-            throw new EntityValidateException('Validation error', $violations, 400);
+            if ($violations->count()) {
+                throw new EntityValidateException('Validation error', $violations, 400);
+            }
         }
 
         return $entity;
