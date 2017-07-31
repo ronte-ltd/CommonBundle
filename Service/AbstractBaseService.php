@@ -60,34 +60,6 @@ abstract class AbstractBaseService
     }
 
     /**
-     * Saves an entity
-     *
-     * @param BaseEntityInterface $entity
-     * @param array $groups
-     * @return BaseEntityInterface
-     */
-    public function save(BaseEntityInterface $entity, array $groups = [])
-    {
-        $result = $this->validate($entity, $groups);
-        $this->getRepository()->save($result, true);
-
-        return $result;
-    }
-
-    /**
-     * Removes an entity
-     *
-     * @param BaseEntityInterface $entity
-     * @return AbstractBaseService
-     */
-    public function remove(BaseEntityInterface $entity): self
-    {
-        $this->getRepository()->remove($entity, true);
-
-        return $this;
-    }
-
-    /**
      * Validates
      *
      * @param BaseEntityInterface $entity
@@ -117,7 +89,7 @@ abstract class AbstractBaseService
      * @param bool $fetchJoinCollection
      * @return array
      */
-    public function paginate(Query $query, $page = 1, $limit = 10, $fetchJoinCollection = false): array
+    public function paginate(Query $query, int $page = 1,  int $limit = 10, $fetchJoinCollection = true): array
     {
         $paginator = new Paginator($query, $fetchJoinCollection);
         $totalItems = $paginator->count();
@@ -134,7 +106,7 @@ abstract class AbstractBaseService
                 'pages' => $pagesCount,
                 'limit' => $limit,
             ],
-            'data' => $paginator
+            'data' => iterator_to_array($paginator)
         ];
     }
 }
